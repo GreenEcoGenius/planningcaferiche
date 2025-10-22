@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Planning Café Riche — Salle & Run (hebdo)</title>
+  <style>
+    :root {
+      --bg: #0f172a;        /* slate-900 */
+      --panel: #111827;     /* gray-900 */
+      --muted: #94a3b8;     /* slate-400 */
+      --text: #e5e7eb;      /* gray-200 */
+      --accent: #22d3ee;    /* cyan-400 */
+      --accent-2: #a78bfa;  /* violet-400 */
+      --chip: #1f2937;      /* gray-800 */
+      --green: #10b981;     /* emerald-500 */
+      --yellow: #f59e0b;    /* amber-500 */
+      --red: #ef4444;       /* red-500 */
+      --blue: #3b82f6;      /* blue-500 */
+      --pink: #ec4899;      /* pink-500 */
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; padding: 24px; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 10% -10%, rgba(34,211,238,.12), transparent),
+                  radial-gradient(1000px 600px at 100% 0%, rgba(167,139,250,.10), transparent),
+                  var(--bg);
+      color: var(--text);
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { margin-bottom: 20px; }
+    h1 { font-size: 28px; margin: 0 0 8px; }
+    .subtitle { color: var(--muted); font-size: 14px; }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      backdrop-filter: blur(6px);
+    }
+
+    .table-wrap { overflow: auto; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); }
+    table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 900px; }
+    thead th {
+      position: sticky; top: 0; z-index: 2;
+      background: linear-gradient(180deg, rgba(34,211,238,0.12), rgba(34,211,238,0.06));
+      color: #e6fbff;
+    }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.06); vertical-align: top; }
+    th:first-child, td:first-child { position: sticky; left: 0; background: rgba(17,24,39,0.9); backdrop-filter: blur(4px); }
+    th:first-child { z-index: 3; }
+
+    .name { font-weight: 600; letter-spacing: .2px; }
+    .muted { color: var(--muted); font-size: 12px; }
+
+    .chip {
+      display: inline-block; padding: 6px 10px; border-radius: 999px; background: var(--chip); border: 1px solid rgba(255,255,255,0.08);
+      font-size: 12px; margin: 2px 6px 2px 0; white-space: nowrap;
+    }
+
+    .split { border-color: rgba(255,255,255,0.12); }
+    .night { background: rgba(59,130,246,0.15); border-color: rgba(59,130,246,0.25); }
+    .day { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.25); }
+    .repos { background: rgba(148,163,184,0.15); border-color: rgba(148,163,184,0.25); color: #cbd5e1; }
+
+    .section-title { display:flex; align-items:center; gap:10px; margin: 26px 0 10px; font-size: 18px; }
+    .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
+    .legend { display:flex; flex-wrap:wrap; gap:10px; margin: 10px 0 0; }
+    .legend .chip { opacity: .9; }
+
+    footer { margin-top: 18px; color: var(--muted); font-size: 12px; }
+    .note { font-size: 12px; color: var(--muted); }
+    /* ==== Mobile (≤ 640px): table → cartes empilées ==== */
+  @media (max-width:640px){
+    body{padding:16px}
+    h1{font-size:20px}
+    .subtitle{font-size:12px}
+    .card{padding:14px}
+    .table-wrap{border:none}
+    table{min-width:0}
+    thead{display:none}
+    table, tbody, tr, td, th{display:block; width:100%}
+    tr{margin:12px 0; border:1px solid rgba(255,255,255,0.08); border-radius:12px; overflow:hidden; background:rgba(17,24,39,0.6)}
+    th:first-child, td:first-child{position:static; background:rgba(17,24,39,0.75)}
+    td{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; border-bottom:1px solid rgba(255,255,255,0.06)}
+    td:last-child{border-bottom:0}
+    /* En-tête de carte = nom */
+    td:nth-child(1){font-weight:700; font-size:14px}
+    /* Étiquettes de jours */
+    td:nth-child(2)::before{content:"Lundi"; color:var(--muted); font-size:12px}
+    td:nth-child(3)::before{content:"Mardi"; color:var(--muted); font-size:12px}
+    td:nth-child(4)::before{content:"Mercredi"; color:var(--muted); font-size:12px}
+    td:nth-child(5)::before{content:"Jeudi"; color:var(--muted); font-size:12px}
+    td:nth-child(6)::before{content:"Vendredi"; color:var(--muted); font-size:12px}
+    td:nth-child(7)::before{content:"Samedi"; color:var(--muted); font-size:12px}
+    td:nth-child(8)::before{content:"Dimanche"; color:var(--muted); font-size:12px}
+    .chip{font-size:11px; padding:4px 8px; margin:2px 0 2px 8px}
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Planning Hebdomadaire — Café Riche</h1>
+      <div class="subtitle">Salle & Run • Lundi → Dimanche • horaires en 24h ("+1" = fin après minuit)</div>
+    </header>
+
+    <div class="card">
+      <div class="section-title"><span class="dot"></span><strong>SALLE</strong></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Employé</th>
+              <th>Lundi</th>
+              <th>Mardi</th>
+              <th>Mercredi</th>
+              <th>Jeudi</th>
+              <th>Vendredi</th>
+              <th>Samedi</th>
+              <th>Dimanche</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 1. Romain -->
+            <tr>
+              <td class="name">Romain<br><span class="muted">
+              <td><span class="chip day">07:00–15:30</span></td>
+              <td><span class="chip day">07:00–15:30</span></td>
+              <td><span class="chip day">07:00–15:30</span></td>
+              <td><span class="chip day">07:00–15:30</span></td>
+              <td><span class="chip day">07:00–15:30</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+            </tr>
+            <!-- 2. Karim -->
+            <tr>
+              <td class="name">Karim<br><span class="muted">
+              <td><span class="chip day">08:00–16:30</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip day">08:00–16:30</span></td>
+              <td><span class="chip day">08:00–16:30</span></td>
+              <td><span class="chip day">07:00–15:30</span></td>
+              <td><span class="chip day">07:00–15:30</span></td>
+            </tr>
+            <!-- 3. J.P -->
+            <tr>
+              <td class="name">J.P<br><span class="muted">
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip day">08:00–18:30</span></td>
+              <td><span class="chip day">08:00–18:30</span></td>
+              <td><span class="chip day">08:00–18:30</span></td>
+              <td><span class="chip day">08:00–18:30</span></td>
+              <td><span class="chip repos">Repos</span></td>
+            </tr>
+            <!-- 4. Carla (coupure) -->
+            <tr>
+              <td class="name">Carla<br><span class="muted">Coupure</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip split">11:00–15:00</span><span class="chip split">18:00–22:00</span></td>
+              <td><span class="chip split">11:00–15:00</span><span class="chip split">18:00–22:00</span></td>
+              <td><span class="chip split">11:00–15:00</span><span class="chip split">18:00–22:00</span></td>
+              <td><span class="chip split">11:00–15:00</span><span class="chip split">18:00–22:00</span></td>
+              <td><span class="chip split">11:00–15:00</span><span class="chip split">18:00–22:00</span></td>
+              <td><span class="chip repos">Repos</span></td>
+            </tr>
+            <!-- 5. Sandra -->
+            <tr>
+              <td class="name">Sandra<br><span class="muted">
+              <td><span class="chip day">09:00–17:30</span></td>
+              <td><span class="chip day">09:00–17:30</span></td>
+              <td><span class="chip day">09:00–17:30</span></td>
+              <td><span class="chip day">10:00–18:30</span></td>
+              <td><span class="chip day">11:00–18:30</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+            </tr>
+            <!-- 6. Roman -->
+            <tr>
+              <td class="name">Roman<br><span class="muted">
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip day">08:00–16:30</span></td>
+              <td><span class="chip day">09:00–17:30</span></td>
+              <td><span class="chip night">16:30–01:00 +1</span></td>
+              <td><span class="chip night">16:30–01:00 +1</span></td>
+              <td><span class="chip night">16:30–01:00 +1</span></td>
+              <td><span class="chip repos">Repos</span></td>
+            </tr>
+            <!-- 7. Yannick -->
+            <tr>
+              <td class="name">Yannick</td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip night">17:00–01:30 +1</span></td>
+              <td><span class="chip night">17:00–01:30 +1</span></td>
+              <td><span class="chip night">17:30–02:00 +1</span></td>
+              <td><span class="chip night">17:30–02:00 +1</span></td>
+              <td><span class="chip night">17:30–02:00 +1</span></td>
+              <td><span class="chip repos">Repos</span></td>
+            </tr>
+            <!-- 8. Willy -->
+            <tr>
+              <td class="name">Willy</td>
+              <td><span class="chip day">15:00–23:30</span></td>
+              <td><span class="chip day">15:00–23:30</span></td>
+              <td><span class="chip day">15:00–23:30</span></td>
+              <td><span class="chip day">15:00–23:30</span></td>
+              <td><span class="chip day">15:00–23:30</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+            </tr>
+            <!-- 9. Zinedine (4 jours) -->
+            <tr>
+              <td class="name">Zinedine<br><span class="muted">
+              <td><span class="chip night">17:00–01:30 +1</span></td>
+              <td><span class="chip day">12:00–20:30</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip day">15:00–23:30</span></td>
+              <td><span class="chip night">17:00–01:30 +1</span></td>
+            </tr>
+            <!-- 10. Louana -->
+            <tr>
+              <td class="name">Louana</td>
+              <td><span class="chip day">12:00–20:30</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip day">12:00–20:30</span></td>
+              <td><span class="chip day">12:00–20:30</span></td>
+              <td><span class="chip day">10:00–18:30</span></td>
+              <td><span class="chip day">08:00–16:30</span></td>
+            </tr>
+            <!-- 11. AYA (25h) -->
+            <tr>
+              <td class="name">Aya<br><span class="muted">Contrat 25h</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip night">18:00–23:00</span></td>
+              <td><span class="chip split">12:00–22:30</span></td>
+              <td><span class="chip split">10:00–20:30</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legend">
+        <span class="chip day">Jour</span>
+        <span class="chip night">Soir/Nuit (termine +1)</span>
+        <span class="chip split">Coupure</span>
+        <span class="chip repos">Repos</span>
+      </div>
+      <p class="note">NB : « Pause 30 min incluse » s'applique à tous sauf aux horaires en coupure.</p>
+    </div>
+
+    <div class="card" style="margin-top: 20px;">
+      <div class="section-title"><span class="dot" style="background: var(--accent-2); box-shadow: 0 0 10px var(--accent-2);"></span><strong>RUNNERS</strong></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Runner</th>
+              <th>Lundi</th>
+              <th>Mardi</th>
+              <th>Mercredi</th>
+              <th>Jeudi</th>
+              <th>Vendredi</th>
+              <th>Samedi</th>
+              <th>Dimanche</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 1. Tia -->
+            <tr>
+              <td class="name">Tia<br><span class="muted">Coupure</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip split">12:00–15:00</span><span class="chip split">18:00–22:00</span></td>
+              <td><span class="chip split">12:00–15:00</span><span class="chip split">18:00–22:00</span></td>
+              <td><span class="chip split">12:00–15:00</span><span class="chip split">18:00–22:00</span></td>
+              <td><span class="chip split">12:00–15:00</span><span class="chip split">18:00–22:00</span></td>
+              <td><span class="chip split">12:00–15:00</span><span class="chip split">18:00–22:00</span></td>
+            </tr>
+            <!-- 2. Manon -->
+            <tr>
+              <td class="name">Manon<br><span class="muted">
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip day">11:00–19:30</span></td>
+              <td><span class="chip day">11:00–19:30</span></td>
+              <td><span class="chip day">11:00–19:30</span></td>
+              <td><span class="chip day">11:00–19:30</span></td>
+              <td><span class="chip day">11:00–19:30</span></td>
+            </tr>
+            <!-- 3. Mayoa -->
+            <tr>
+              <td class="name">Mayoa<br><span class="muted">Coupure</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip split">10:00–15:00</span><span class="chip split">19:00–22:00</span></td>
+              <td><span class="chip split">10:00–15:00</span><span class="chip split">19:00–22:00</span></td>
+              <td><span class="chip split">10:00–15:00</span><span class="chip split">19:00–22:00</span></td>
+              <td><span class="chip repos">Repos</span></td>
+            </tr>
+            <!-- 4. Marco -->
+            <tr>
+              <td class="name">Marco</td>
+              <td><span class="chip day">11:00–15:00</span></td>
+              <td><span class="chip split">12:00–16:00</span><span class="chip split">19:00–23:00</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip day">11:00–15:00</span></td>
+              <td><span class="chip repos">Repos</span></td>
+              <td><span class="chip repos">Repos</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legend">
+        <span class="chip day">Jour</span>
+        <span class="chip split">Coupure</span>
+        <span class="chip repos">Repos</span>
+      </div>
+    </div>
+
+    <footer>
+      Format prêt à imprimer / intégrer. Besoin d'export PDF, d'un .ics, ou d'une version modifiable (Google Sheets / Firebase)
+  </div>
+</body>
+</html>
