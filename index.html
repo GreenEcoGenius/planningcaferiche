@@ -331,5 +331,190 @@
     <footer>
       Format prêt à imprimer / intégrer. Besoin d'export PDF, d'un .ics, ou d'une version modifiable (Google Sheets / Firebase)
   </div>
+  <!-- Équipe présente par jour -->
+  <div class="card" style="margin-top:28px">
+    <h2 style="margin:0 0 8px">Équipe présente par jour</h2>
+    <p class="subtitle" style="margin:0 0 14px">Récap par journée (Salle & Runners). «(+1)» = fin après minuit.</p>
+
+    <style>
+      .day-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+      .day{border:1px solid rgba(148,163,184,.18);border-radius:14px;padding:12px;background:rgba(2,6,23,.35)}
+      .day h3{margin:0 0 8px;font-size:16px}
+      .day .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      .day .col h4{margin:0 0 6px;font-size:13px;color:#cbd5e1}
+      .item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 8px;border:1px solid rgba(148,163,184,.18);border-radius:10px;background:rgba(148,163,184,.08);margin:6px 0}
+      .who{font-weight:600}
+      /* Tablet */
+      @media(max-width:900px){
+        .day-grid{grid-template-columns:1fr}
+      }
+      /* Mobile */
+      @media(max-width:640px){
+        .day{padding:10px;border-radius:12px}
+        .day h3{font-size:14px}
+        .day .cols{grid-template-columns:1fr;gap:8px}
+        .day .col h4{font-size:12px}
+        .item{padding:8px 10px;gap:8px}
+        .who{font-size:13px}
+        .item .slot{font-size:12px;white-space:nowrap}
+      }
+    </style>
+
+    <div class="day-grid">
+      <!-- Lundi -->
+      <div class="day">
+        <h3>Lundi</h3>
+        <div class="cols">
+          <div class="col">
+            <h4>Salle</h4>
+            <div class="item"><span class="who">Romain</span><span class="slot">07h00–15h30</span></div>
+            <div class="item"><span class="who">Karim</span><span class="slot">08h00–16h30</span></div>
+            <div class="item"><span class="who">Sandra</span><span class="slot">09h00–17h30</span></div>
+            <div class="item"><span class="who">Willy</span><span class="slot">15h00–23h30</span></div>
+            <div class="item"><span class="who">Zinedine</span><span class="slot night">17h00–01h30 (+1)</span></div>
+            <div class="item"><span class="who">Louana</span><span class="slot">12h00–20h30</span></div>
+          </div>
+          <div class="col">
+            <h4>Runners</h4>
+            <div class="item"><span class="who">Marco</span><span class="slot">11h00–15h00</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Mardi -->
+      <div class="day">
+        <h3>Mardi</h3>
+        <div class="cols">
+          <div class="col">
+            <h4>Salle</h4>
+            <div class="item"><span class="who">Romain</span><span class="slot">07h00–15h30</span></div>
+            <div class="item"><span class="who">Carla</span><span class="slot coupure">11h00–15h00 • 18h00–22h00</span></div>
+            <div class="item"><span class="who">Sandra</span><span class="slot">09h00–17h30</span></div>
+            <div class="item"><span class="who">Roman</span><span class="slot">08h00–16h30</span></div>
+            <div class="item"><span class="who">Yannick</span><span class="slot night">17h00–01h30 (+1)</span></div>
+            <div class="item"><span class="who">Willy</span><span class="slot">15h00–23h30</span></div>
+            <div class="item"><span class="who">Zinedine</span><span class="slot">12h00–20h30</span></div>
+          </div>
+          <div class="col">
+            <h4>Runners</h4>
+            <div class="item"><span class="who">Marco</span><span class="slot coupure">12h00–16h00 • 19h00–23h00</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Mercredi -->
+      <div class="day">
+        <h3>Mercredi</h3>
+        <div class="cols">
+          <div class="col">
+            <h4>Salle</h4>
+            <div class="item"><span class="who">Romain</span><span class="slot">07h00–15h30</span></div>
+            <div class="item"><span class="who">J.P</span><span class="slot">08h00–18h30</span></div>
+            <div class="item"><span class="who">Carla</span><span class="slot coupure">11h00–15h00 • 18h00–22h00</span></div>
+            <div class="item"><span class="who">Sandra</span><span class="slot">09h00–17h30</span></div>
+            <div class="item"><span class="who">Roman</span><span class="slot">09h00–17h30</span></div>
+            <div class="item"><span class="who">Yannick</span><span class="slot night">17h00–01h30 (+1)</span></div>
+            <div class="item"><span class="who">Willy</span><span class="slot">15h00–23h30</span></div>
+          </div>
+          <div class="col">
+            <h4>Runners</h4>
+            <div class="item"><span class="who">Tia</span><span class="slot coupure">12h00–15h00 • 18h00–22h00</span></div>
+            <div class="item"><span class="who">Manon</span><span class="slot">11h00–19h30</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Jeudi -->
+      <div class="day">
+        <h3>Jeudi</h3>
+        <div class="cols">
+          <div class="col">
+            <h4>Salle</h4>
+            <div class="item"><span class="who">Romain</span><span class="slot">07h00–15h30</span></div>
+            <div class="item"><span class="who">Karim</span><span class="slot">08h00–16h30</span></div>
+            <div class="item"><span class="who">J.P</span><span class="slot">08h00–18h30</span></div>
+            <div class="item"><span class="who">Carla</span><span class="slot coupure">11h00–15h00 • 18h00–22h00</span></div>
+            <div class="item"><span class="who">Sandra</span><span class="slot">10h00–18h30</span></div>
+            <div class="item"><span class="who">Roman</span><span class="slot night">16h30–01h00 (+1)</span></div>
+            <div class="item"><span class="who">Yannick</span><span class="slot night">17h30–02h00 (+1)</span></div>
+            <div class="item"><span class="who">Willy</span><span class="slot">15h00–23h30</span></div>
+            <div class="item"><span class="who">Louana</span><span class="slot">12h00–20h30</span></div>
+          </div>
+          <div class="col">
+            <h4>Runners</h4>
+            <div class="item"><span class="who">Tia</span><span class="slot coupure">12h00–15h00 • 18h00–22h00</span></div>
+            <div class="item"><span class="who">Manon</span><span class="slot">11h00–19h30</span></div>
+            <div class="item"><span class="who">Mayoa</span><span class="slot coupure">10h00–15h00 • 19h00–22h00</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Vendredi -->
+      <div class="day">
+        <h3>Vendredi</h3>
+        <div class="cols">
+          <div class="col">
+            <h4>Salle</h4>
+            <div class="item"><span class="who">Romain</span><span class="slot">07h00–15h30</span></div>
+            <div class="item"><span class="who">Karim</span><span class="slot">08h00–16h30</span></div>
+            <div class="item"><span class="who">J.P</span><span class="slot">08h00–18h30</span></div>
+            <div class="item"><span class="who">Carla</span><span class="slot coupure">11h00–15h00 • 18h00–22h00</span></div>
+            <div class="item"><span class="who">Sandra</span><span class="slot">11h00–18h30</span></div>
+            <div class="item"><span class="who">Roman</span><span class="slot night">16h30–01h00 (+1)</span></div>
+            <div class="item"><span class="who">Yannick</span><span class="slot night">17h30–02h00 (+1)</span></div>
+            <div class="item"><span class="who">Willy</span><span class="slot">15h00–23h30</span></div>
+            <div class="item"><span class="who">Louana</span><span class="slot">12h00–20h30</span></div>
+            <div class="item"><span class="who">Aya</span><span class="slot">18h00–23h00</span></div>
+          </div>
+          <div class="col">
+            <h4>Runners</h4>
+            <div class="item"><span class="who">Tia</span><span class="slot coupure">12h00–15h00 • 18h00–22h00</span></div>
+            <div class="item"><span class="who">Manon</span><span class="slot">11h00–19h30</span></div>
+            <div class="item"><span class="who">Mayoa</span><span class="slot coupure">10h00–15h00 • 19h00–22h00</span></div>
+            <div class="item"><span class="who">Marco</span><span class="slot">11h00–15h00</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Samedi -->
+      <div class="day">
+        <h3>Samedi</h3>
+        <div class="cols">
+          <div class="col">
+            <h4>Salle</h4>
+            <div class="item"><span class="who">Karim</span><span class="slot">07h00–15h30</span></div>
+            <div class="item"><span class="who">J.P</span><span class="slot">08h00–18h30</span></div>
+            <div class="item"><span class="who">Carla</span><span class="slot coupure">11h00–15h00 • 18h00–22h00</span></div>
+            <div class="item"><span class="who">Roman</span><span class="slot night">16h30–01h00 (+1)</span></div>
+            <div class="item"><span class="who">Yannick</span><span class="slot night">17h30–02h00 (+1)</span></div>
+            <div class="item"><span class="who">Zinedine</span><span class="slot">15h00–23h30</span></div>
+            <div class="item"><span class="who">Louana</span><span class="slot">10h00–18h30</span></div>
+            <div class="item"><span class="who">Aya</span><span class="slot coupure">12h00–22h30</span></div>
+          </div>
+          <div class="col">
+            <h4>Runners</h4>
+            <div class="item"><span class="who">Tia</span><span class="slot coupure">12h00–15h00 • 18h00–22h00</span></div>
+            <div class="item"><span class="who">Manon</span><span class="slot">11h00–19h30</span></div>
+            <div class="item"><span class="who">Mayoa</span><span class="slot coupure">10h00–15h00 • 19h00–22h00</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Dimanche -->
+      <div class="day">
+        <h3>Dimanche</h3>
+        <div class="cols">
+          <div class="col">
+            <h4>Salle</h4>
+            <div class="item"><span class="who">Karim</span><span class="slot">07h00–15h30</span></div>
+            <div class="item"><span class="who">Zinedine</span><span class="slot night">17h00–01h30 (+1)</span></div>
+            <div class="item"><span class="who">Louana</span><span class="slot">08h00–16h30</span></div>
+            <div class="item"><span class="who">Aya</span><span class="slot coupure">10h00–20h30</span></div>
+          </div>
+          <div class="col">
+            <h4>Runners</h4>
+            <div class="item"><span class="who">Tia</span><span class="slot coupure">12h00–15h00 • 18h00–22h00</span></div>
+            <div class="item"><span class="who">Manon</span><span class="slot">11h00–19h30</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </body>
 </html>
